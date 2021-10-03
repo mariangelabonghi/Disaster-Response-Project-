@@ -4,8 +4,8 @@
 
 
 ## Description
-This is the second project for the "Data Scientist" [Udacity](https://www.udacity.com) Nanodegree 
-in collaboration with Figure Eight that has provided pre-labeled tweets and text-messages from 
+This is the second project for the "Data Scientist" [Udacity](https://www.udacity.com) Nanodegree
+in collaboration with Figure Eight that has provided pre-labeled tweets and text-messages from
 real life disaster.
 
 The task of the project is to repair this data with an ETL pipeline
@@ -15,13 +15,14 @@ Here below the main tasks:
 
 - build an ETL pipeline to extract data, transform data and finally save them in a SQLite DB
 - build a machine learning pipeline to classify text message in various categories
-- Run a web app which can show model results in real time 
+- Run a web app which can show model results in real time
 
 
 ## How to...
 
 - clone the project running:
-- install the following libraries: Pandas, Numpy...
+git clone https://github.com/mariangelabonghi/Disaster-Response-Project-.git
+- install the following libraries: Pandas, Numpy, sqlalchemy,re, nltk, sklearn, pickle
 - Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
