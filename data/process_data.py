@@ -1,3 +1,11 @@
+"""
+Inputs:
+- Path to the CSV file containing messages
+- Path to the CSV file containing categories
+- Path to SQLite destination database
+To run the script:
+python process_data.py <path to messages csv file> <path to categories csv file> <path to sqllite  destination db>
+"""
 import sys
 import pandas as pd
 import sqlalchemy as sa
