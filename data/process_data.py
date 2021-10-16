@@ -3,6 +3,11 @@ import pandas as pd
 import sqlalchemy as sa
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    Takes in input the path of the two files
+    Load the two files in two different dataset.
+    Merge the dataset and return the dataset after merging
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = pd.merge(messages,categories,how='left',on='id')
@@ -10,7 +15,10 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-
+    '''
+    It creates one column for each categories in df dataset
+    then it removes duplicate
+    '''
     categories = df.categories.str.split(pat=';',expand=True)
     # select the first row of the categories dataframe
     row = categories.iloc[1,:]
@@ -32,6 +40,9 @@ def clean_data(df):
     return df
 
 def save_data(df, database_filename):
+    '''
+    Save the dataset df in a sqlLite DB database_filename
+    '''
     engine = sa.create_engine('sqlite:///'+database_filename)
     df.to_sql('Messages', engine, index=False,if_exists='replace')
 
