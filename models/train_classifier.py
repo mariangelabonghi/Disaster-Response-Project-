@@ -1,3 +1,10 @@
+"""
+Input:
+- Path to SQLite destination database
+- Path to pickle file name where ML model needs to be saved
+To run the script:
+python train_classifier.py <path to sqllite  destination db> <path to the pickle file>
+"""
 import sys
 import pandas as pd
 import sqlalchemy as sa
@@ -22,7 +29,12 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import pickle
 
 def load_data(database_filepath):
-    # load data from database
+    """
+    Load data from database and return
+    X: column message
+    y: categories
+    category_names: names of the categories
+    """
     engine = sa.create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('Messages', engine)
     X = df['message']
@@ -57,7 +69,10 @@ def tokenize(text,url_place_holder_string="urlplaceholder"):
     return tokens
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
-
+    """
+    The class StartingVerbExtractor extracts the starting verb of a sentence,
+    creating a new feature for the ML classifier
+    """
     def starting_verb(self, text):
         sentence_list = nltk.sent_tokenize(text)
         for sentence in sentence_list:
@@ -75,6 +90,10 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return pd.DataFrame(X_tagged)
 
 def build_model():
+    """
+    Build Pipeline function returns a ML pipeline
+    that process text messages and apply a classifier.
+    """
     model = Pipeline([
     ('features', FeatureUnion([
         ('text_pipeline', Pipeline([
@@ -90,11 +109,18 @@ def build_model():
     return model
 
 def evaluate_model(model, X_test, y_test, category_names):
+    """
+    This function applies a ML pipeline to a test set
+    and prints out the model performance
+    """
     y_pred = model.predict(X_test)
     for i, j in enumerate(category_names):
         classification_report(y_test[j], y_pred[:,i])
 
 def save_model(model, model_filepath):
+    '''
+    Save trained model as Pickle file
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
 
 def main():
