@@ -17,6 +17,14 @@ Here below the main tasks:
 - build a machine learning pipeline to classify text message in various categories
 - Run a web app which can show model results in real time
 
+## File Description:
+- app : This folder contains the script "run.py" for the web app;
+- data: This folder contains sample messages and categories csv files and the following files:
+  - ETL Pipeline Preparation.ipynb: notebook for preparation of the script "process_data.py";
+  - script "process_data.py": This script takes in input csv files containing message data and message  categories; it cleans the data and save the final dataset in a sqlLite DB database_filename;
+- models: This folder contains the following files:  
+  - ML Pipeline Preparation.ipynb: notebook for preparation of the script "train_classifier.py";
+  - script "train_classifier.py": This script load data from the database, define the model, evaluate the model and finally save the ML model.
 
 ## How to...
 
@@ -34,3 +42,7 @@ git clone https://github.com/mariangelabonghi/Disaster-Response-Project-.git
     `python run.py`
 
 - Go to http://0.0.0.0:3001/
+
+## Acknowledgements
+- "Data Scientist" [Udacity](https://www.udacity.com) Nanodegree: the project was developed for this course;
+- Figure Eight that has provided pre-labeled tweets and text-messages from real life disaster.
