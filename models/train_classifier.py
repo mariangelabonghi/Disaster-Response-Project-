@@ -94,18 +94,17 @@ def build_model():
     Build Pipeline function returns a ML pipeline
     that process text messages and apply a classifier.
     """
-    model = Pipeline([
-    ('features', FeatureUnion([
-        ('text_pipeline', Pipeline([
-            ('vect', CountVectorizer(tokenizer=tokenize)),
-            ('tfidf', TfidfTransformer())
-        ])),
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier()))])
 
-        ('starting_verb', StartingVerbExtractor())
-        ])),
+    parameters = {
+        'clf__estimator__n_estimators': [25, 50, 100],
+        'clf__estimator__max_leaf_nodes': [2, 3, 4]
+    }
 
-    ('clf', RandomForestClassifier())
-    ])
+    model = GridSearchCV(pipeline, param_grid=parameters)
     return model
 
 def evaluate_model(model, X_test, y_test, category_names):
