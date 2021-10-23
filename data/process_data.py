@@ -25,7 +25,7 @@ def load_data(messages_filepath, categories_filepath):
 def clean_data(df):
     '''
     It creates one column for each categories in df dataset
-    then it removes duplicate
+    convert all categories to binary then it removes duplicate
     '''
     categories = df.categories.str.split(pat=';',expand=True)
     # select the first row of the categories dataframe
@@ -44,6 +44,7 @@ def clean_data(df):
         categories[column] = categories[column].astype(int)
     df.drop(['categories'], axis=1, inplace=True)
     df = pd.concat([df,categories], join="inner",axis=1)
+    df['related'] = df['related'].replace([2],1)
     df = df.drop_duplicates()
     return df
 
